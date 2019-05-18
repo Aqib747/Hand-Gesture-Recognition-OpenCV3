@@ -21,7 +21,7 @@ hull = [cv2.convexHull(c) for c in countours ]
 
 #drawing countours
 
-final =cv2.drawContours(hand, hull, -1, (255, 0, 0), 3)
+final =cv2.drawContours(hand, hull, -1, (255, 0, 0), 3) 
 
 cv2.imshow("orignalImage", hand)
 
