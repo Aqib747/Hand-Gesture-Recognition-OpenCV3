@@ -41,7 +41,7 @@ while True:
 
     #Getting Countours
 
-    image,contour,herrachy =    cv2.findContours(thresh, cv2.RETR_TREE , cv2.CHAIN_APPROX_SIMPLE)
+    contour,herrachy =    cv2.findContours(thresh.copy(), cv2.RETR_TREE , cv2.CHAIN_APPROX_SIMPLE)
 
     try:
         # find contour with maximum area
@@ -56,7 +56,7 @@ while True:
         hull= cv2.convexHull(MaxContour)
 
         #draw Countour
-        drawing = np.zeros(crop_image , dtype="uint8")
+        drawing = np.zeros(crop_image , np.uint8)
         cv2.drawContours(drawing, [MaxContour], -1, (0, 255, 0),0 )
         cv2.drawContours(drawing, [hull], -1, (0, 255, 0), 0)
 
@@ -86,17 +86,28 @@ while True:
 
             cv2.line(crop_image, start, end, [0, 255, 0], 2)
 
-        if count_defects == 0:
+        if count_defect == 0:
             cv2.putText(frame, "AK UNGLI", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
-        elif count_defects == 1:
+        elif count_defect == 1:
             cv2.putText(frame, "DO UNGLI ", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
-        elif count_defects == 2:
+        elif count_defect == 2:
             cv2.putText(frame, "TEEN UNGLI", (5, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
-        elif count_defects == 3:
+        elif count_defect == 3:
             cv2.putText(frame, "CHAAR UNGLI", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
-        elif count_defects == 4:
+        elif count_defect == 4:
             cv2.putText(frame, "PANCH UNGLI", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
         else:
             pass
     except:
         pass
+
+    # show required images
+    cv2.imshow("gesture", frame)
+    all_image = np.hstack((drawing, crop_image))
+    cv2.imshow("Contours", all_image)
+
+    if cv2.waitKey(1)== ord('q'):
+        break
+
+cap.release()
+cv2.destroyAllWindows()
