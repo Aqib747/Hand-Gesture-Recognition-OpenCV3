@@ -49,4 +49,39 @@ while True:
 
         #Create Bounding Rectangle around Contour
         x, y, w, h = cv2.boundingRect(MaxContour)
-        
+        cv2.rectangle(crop_image, (x, y), (x + w, y +h) (0, 0 ,255), 0)
+
+        #Applying Convex Hull
+
+        hull= cv2.convexHull(MaxContour)
+
+        #draw Countour
+        drawing = np.zeros(crop_image , dtype="uint8")
+        cv2.drawContours(drawing, [MaxContour], -1, (0, 255, 0),0 )
+        cv2.drawContours(drawing, [hull], -1, (0, 255, 0), 0)
+
+        #find convexity defect
+        hull = cv2.convexHull(MaxContour, returnPoints= False)
+        defects = cv2.convexityDefects(MaxContour, hull)
+
+        #useing cosine rule to find the far point from the start and end point
+
+        count_defect = 0
+
+        for i in range(defects.shape[0]):
+            s, e, f, d = defects[i ,0]
+            start = tuple(MaxContour[s][0])
+            end = tuple(MaxContour[e][0])
+            far = tuple(MaxContour[f][0])
+
+            a = math.sqrt((end[0] - start[0]) ** 2 + (end[1] - start[1]) ** 2)
+            b = math.sqrt((far[0] - start[0]) ** 2 + (far[1] - start[1]) ** 2)
+            c = math.sqrt((end[0] - far[0]) ** 2 + (end[1] - far[1]) ** 2)
+            angle = (math.acos((b ** 2 + c ** 2 - a ** 2) / (2 * b * c)) * 180) / 3.14
+
+            # if angle > 90 draw a circle at the far point
+            if angle <= 90:
+                count_defect += 1
+                cv2.circle(crop_image, far, 1, [0, 0, 255], -1)
+
+            cv2.line(crop_image, start, end, [0, 255, 0], 2)
