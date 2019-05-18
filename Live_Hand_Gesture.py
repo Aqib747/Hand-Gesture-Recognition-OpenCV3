@@ -41,4 +41,12 @@ while True:
 
     #Getting Countours
 
-    
+    image,contour,herrachy =    cv2.findContours(thresh, cv2.RETR_TREE , cv2.CHAIN_APPROX_SIMPLE)
+
+    try:
+        # find contour with maximum area
+        MaxContour =  max(contour, key=lambda x: cv2.contourArea(x))
+
+        #Create Bounding Rectangle around Contour
+        x, y, w, h = cv2.boundingRect(MaxContour)
+        
