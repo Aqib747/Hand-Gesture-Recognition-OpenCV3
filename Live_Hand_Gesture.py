@@ -85,3 +85,18 @@ while True:
                 cv2.circle(crop_image, far, 1, [0, 0, 255], -1)
 
             cv2.line(crop_image, start, end, [0, 255, 0], 2)
+
+        if count_defects == 0:
+            cv2.putText(frame, "AK UNGLI", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+        elif count_defects == 1:
+            cv2.putText(frame, "DO UNGLI ", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+        elif count_defects == 2:
+            cv2.putText(frame, "TEEN UNGLI", (5, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+        elif count_defects == 3:
+            cv2.putText(frame, "CHAAR UNGLI", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+        elif count_defects == 4:
+            cv2.putText(frame, "PANCH UNGLI", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 2, (0, 0, 255), 2)
+        else:
+            pass
+    except:
+        pass
