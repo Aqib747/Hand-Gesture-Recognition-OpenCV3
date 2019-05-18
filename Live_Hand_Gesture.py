@@ -34,4 +34,11 @@ while True:
     #again gausian blur
 
     filtered = cv2.GaussianBlur(erosion, (3, 3), 0 )
-    ret ,thresh = 
+    ret ,thresh =  cv2.threshold(filtered, 127, 255, 0)
+
+    # threshold image
+    cv2.imshow("Thresholded Image", thresh)
+
+    #Getting Countours
+
+    
